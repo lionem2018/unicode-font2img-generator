@@ -64,8 +64,7 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
     fonts = glob.glob(os.path.join(fonts_dir, '*.ttf'))
 
     # 각 ttf파일들을 통해 생성한 글자 이미지와 레이블 맵핑한 csv 파일 생성
-    labels_csv = io.open(os.path.join(output_dir, 'test-labels-map.csv'), 'w',
-                         encoding='utf-8')
+    labels_csv = io.open(os.path.join(output_dir, 'test-labels-map.csv'), 'w',encoding='utf-8')
 
     # 총 생성된 이미지의 수를 세기 위한 변수
     total_count = 0
@@ -86,11 +85,11 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
             if char_in_font(character, font):
                 unicode_list.append(character)
 
-        # 유니코드 테이블이 잘 생성되었는지 출력
+        # 유니코드 리스트가 잘 생성되었는지 출력
         print(unicode_list)
         print("Total number of existing unicode:", len(unicode_list))
 
-        # 유니코드 테이블을 순회하며 이미지 생성
+        # 유니코드 리스트를 순회하며 이미지 생성
         for unicode in unicode_list:
 
             # 현재까지 몇 개의 이미지가 생성되었는지 5000개가 생성될 때마다 출력
@@ -118,7 +117,7 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
             )
 
             # 생성한 글자 이미지를 array 타입으로 변경하여
-            # 유니코드 테이블 상으로는 존재하나, 폰트 글자가 존재하지 않는 경우 확인
+            # 유니코드 리스트 상으로는 존재하나, 폰트 글자가 존재하지 않는 경우 확인
             # 존재하지 않는 경우 이미지를 생성하지 않고 다음으로 넘어감
             image_arr = numpy.array(image)
             if is_not_existing(image_arr, character):
