@@ -63,7 +63,7 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
     # ttf 파일 리스트 생성
     fonts = glob.glob(os.path.join(fonts_dir, '*.ttf'))
 
-    # 각 ttf파일들을 통해 생성한 글자 이미지와 레이블 맵핑한 csv 파일 생성
+    # ttf 파일들을 통해 생성한 글자 이미지와 레이블 맵핑할 csv 파일 생성
     labels_csv = io.open(os.path.join(output_dir, 'test-labels-map.csv'), 'w',encoding='utf-8')
 
     # 총 생성된 이미지의 수를 세기 위한 변수
