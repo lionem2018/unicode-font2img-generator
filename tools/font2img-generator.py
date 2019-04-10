@@ -5,10 +5,7 @@ import os
 import numpy
 
 from PIL import Image, ImageFont, ImageDraw
-from scipy.ndimage.interpolation import map_coordinates
-from scipy.ndimage.filters import gaussian_filter
 from fontTools.ttLib import TTFont
-
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -83,18 +80,18 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
 
         # 폰트 유니코드 확인을 위해 TTFont로 load
         font = TTFont(fontpath)
-        # 해당 폰트의 유니코드 테이블 생성
-        unicode_table = []
+        # 해당 폰트의 지원 유니코드 리스트 생성
+        unicode_list = []
         for character in range(start_unicode, end_unicode):
             if char_in_font(character, font):
-                unicode_table.append(character)
+                unicode_list.append(character)
 
         # 유니코드 테이블이 잘 생성되었는지 출력
-        print(unicode_table)
-        print("Total number of existing unicode:", len(unicode_table))
+        print(unicode_list)
+        print("Total number of existing unicode:", len(unicode_list))
 
         # 유니코드 테이블을 순회하며 이미지 생성
-        for unicode in unicode_table:
+        for unicode in unicode_list:
 
             # 현재까지 몇 개의 이미지가 생성되었는지 5000개가 생성될 때마다 출력
             if total_count - prev_count > 5000:
