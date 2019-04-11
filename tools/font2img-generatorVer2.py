@@ -13,7 +13,7 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 # Default data paths.
 DEFAULT_FONTS_DIR = os.path.join(SCRIPT_PATH, '../fonts')
 DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, '../image-data')
-DEFAULT_LANGUAGE = 'hangul'
+DEFAULT_LANGUAGE = 'ch'
 
 # Number of random distortion images to generate per font and character.
 # 글꼴 및 문자 당 생성할 랜덤한 왜곡 이미지의 수
@@ -183,9 +183,9 @@ def generate_fonts_images(language, fonts_dir, output_dir):
     lang_unicode = load_lang_unicode(language)
 
     for start_unicode_char, end_unicode_char in lang_unicode:
-        start_unicode_num = ord(start_unicode_char)
-        end_unicode_num = ord(end_unicode_char)
-        print(start_unicode_char, end_unicode_char)
+        start_unicode_num = int(start_unicode_char, 16)
+        end_unicode_num = int(end_unicode_char, 16)
+        print(chr(start_unicode_num), chr(end_unicode_num))
         print(start_unicode_num, end_unicode_num)
         draw_images(fonts, image_dir, labels_csv, start_unicode_num, end_unicode_num)
 

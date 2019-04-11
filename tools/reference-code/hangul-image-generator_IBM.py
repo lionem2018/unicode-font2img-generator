@@ -114,7 +114,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 # array 형의 데이터를 image로 전환
                 distorted_image = Image.fromarray(distorted_array)
                 # 왜곡 이미지 저장
-                distorted_image.save(file_path, 'JPEG')\
+                distorted_image.save(file_path, 'JPEG')
                 # csv 파일에 생성한 글자 이미지와 해당 글자(label)를 나란히 파일에 작성
                 labels_csv.write(u'{},{}\n'.format(file_path, character))
 
