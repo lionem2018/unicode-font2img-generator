@@ -81,7 +81,7 @@ def draw_images(fonts, image_dir, labels_csv, start_unicode=0, end_unicode=0x10F
 
         # 폰트 유니코드 확인을 위해 TTFont로 load
         font = TTFont(fontpath)
-        # 해당 폰트의 지원 유니코드 리스트 생성
+        # 영역 내 해당 폰트의 지원 유니코드 리스트 생성
         unicode_list = []
         for character in range(start_unicode, end_unicode):
             if char_in_font(character, font):
@@ -180,13 +180,18 @@ def generate_fonts_images(language, fonts_dir, output_dir):
     # ttf 파일들을 통해 생성한 글자 이미지와 레이블을 맵핑할 csv 파일 생성
     labels_csv = io.open(os.path.join(output_dir, 'test-labels-map.csv'), 'w', encoding='utf-8')
 
+    # 해당 언어의 유니코드 영역 리스트를 불러옴
     lang_unicode = load_lang_unicode(language)
 
+    # 영역 리스트를 순회하며 영역마다의 폰트 이미지를 추출함
     for start_unicode_char, end_unicode_char in lang_unicode:
+        # 영역 정보는 string으로 저장되어 있기 때문에 16진수로 변환 과정 거침
         start_unicode_num = int(start_unicode_char, 16)
         end_unicode_num = int(end_unicode_char, 16)
+
         print(chr(start_unicode_num), chr(end_unicode_num))
         print(start_unicode_num, end_unicode_num)
+        # 폰트 파일들을 가지고 해당 영역의 글자들을 이미지로 생성함
         draw_images(fonts, image_dir, labels_csv, start_unicode_num, end_unicode_num)
 
     print('Finished generating {} images.'.format(total_count))
