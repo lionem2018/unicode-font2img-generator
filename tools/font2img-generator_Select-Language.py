@@ -13,7 +13,7 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 # Default data paths.
 DEFAULT_FONTS_DIR = os.path.join(SCRIPT_PATH, '../fonts')
 DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, '../image-data')
-DEFAULT_LANGUAGE = 'ch'
+DEFAULT_LANGUAGE = 'kr'
 
 # Number of random distortion images to generate per font and character.
 # 글꼴 및 문자 당 생성할 랜덤한 왜곡 이미지의 수
@@ -61,7 +61,7 @@ def char_in_font(unicode_char, font):
     return False
 
 
-def draw_images(fonts, image_dir, labels_csv, start_unicode=0, end_unicode=0x10FFFF):
+def draw_images(fonts, image_dir, labels_csv, language , start_unicode=0, end_unicode=0x10FFFF):
     """
     Draw character images styling each of fonts
     폰트 각각의 스타일을 가진 글자 이미지 그림
@@ -77,6 +77,8 @@ def draw_images(fonts, image_dir, labels_csv, start_unicode=0, end_unicode=0x10F
     prev_count = 0
 
     # 각 글자 이미지를 생성할 폰트 수 만큼 반복
+
+
     for fontpath in fonts:
 
         # 폰트 유니코드 확인을 위해 TTFont로 load
@@ -128,7 +130,7 @@ def draw_images(fonts, image_dir, labels_csv, start_unicode=0, end_unicode=0x10F
             # 현재까지 출력한 이미지의 수를 하나 추가함
             total_count += 1
             # 각 폰트의 글자 이미지 file 이름 생성
-            file_string = 'hangul_{}.jpeg'.format(total_count)
+            file_string = '{}_{}.jpeg'.format(language, total_count)
             # 글자 이미지 path 지정
             file_path = os.path.join(image_dir, file_string)
             # JPEG 형식으로 글자 이미지 생성
@@ -192,7 +194,7 @@ def generate_fonts_images(language, fonts_dir, output_dir):
         print(chr(start_unicode_num), chr(end_unicode_num))
         print(start_unicode_num, end_unicode_num)
         # 폰트 파일들을 가지고 해당 영역의 글자들을 이미지로 생성함
-        draw_images(fonts, image_dir, labels_csv, start_unicode_num, end_unicode_num)
+        draw_images(fonts, image_dir, labels_csv, language, start_unicode_num, end_unicode_num)
 
     print('Finished generating {} images.'.format(total_count))
     labels_csv.close()
