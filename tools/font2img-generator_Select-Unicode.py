@@ -12,6 +12,8 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 # Default data paths.
 DEFAULT_FONTS_DIR = os.path.join(SCRIPT_PATH, '../fonts')
 DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, '../image-data')
+DEFAULT_START_UNICODE = 0
+DEFAULT_END_UNICODE = 0x10FFFF
 
 # Number of random distortion images to generate per font and character.
 # 글꼴 및 문자 당 생성할 랜덤한 왜곡 이미지의 수
@@ -41,7 +43,7 @@ def char_in_font(unicode_char, font):
     return False
 
 
-def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0x10FFFF):
+def generate_hangul_images(fonts_dir, output_dir, start_unicode, end_unicode):
     """Generate Hangul image files.  한글 이미지 파일 생성
 
     This will take in the passed in labels file and will generate several
@@ -74,8 +76,6 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
     for fontpath in fonts:
 
         current_count = 0
-
-    # fontpath = fonts[3]
 
         # 폰트 유니코드 확인을 위해 TTFont로 load
         font = TTFont(fontpath)
@@ -127,7 +127,7 @@ def generate_hangul_images(fonts_dir, output_dir, start_unicode=0, end_unicode=0
             total_count += 1
             current_count += 1
             # 각 폰트의 글자 이미지 file 이름 생성
-            file_string = 'hangul_{}.jpeg'.format(total_count)
+            file_string = 'Char_{}.jpeg'.format(total_count)
             # 글자 이미지 path 지정
             file_path = os.path.join(image_dir, file_string)
             # JPEG 형식으로 글자 이미지 생성
@@ -162,6 +162,12 @@ def is_not_existing(image, character):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--start-unicode', type=lambda x: int(x, 0), dest='start_unicode',
+                        default=DEFAULT_START_UNICODE,
+                        help='Start unicode code point for setting labels')
+    parser.add_argument('--end-unicode', type=lambda x: int(x, 0), dest='end_unicode',
+                        default=DEFAULT_END_UNICODE,
+                        help='End unicode code point for setting labels')
     parser.add_argument('--font-dir', type=str, dest='fonts_dir',
                         default=DEFAULT_FONTS_DIR,
                         help='Directory of ttf fonts to use.')
@@ -169,7 +175,8 @@ if __name__ == '__main__':
                         default=DEFAULT_OUTPUT_DIR,
                         help='Output directory to store generated images and '
                              'label CSV file.')
+
     args = parser.parse_args()
 
-    generate_hangul_images(args.fonts_dir, args.output_dir)
+    generate_hangul_images(args.fonts_dir, args.output_dir, args.start_unicode, args.end_unicode)
 

@@ -77,8 +77,6 @@ def draw_images(fonts, image_dir, labels_csv, language , start_unicode=0, end_un
     prev_count = 0
 
     # 각 글자 이미지를 생성할 폰트 수 만큼 반복
-
-
     for fontpath in fonts:
 
         # 폰트 유니코드 확인을 위해 TTFont로 load
