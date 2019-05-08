@@ -202,7 +202,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--lang', type=str, dest='language',
                         default=DEFAULT_LANGUAGE,
-                        help='Language for font')
+                        help='Language to create font character images')
     parser.add_argument('--font-dir', type=str, dest='fonts_dir',
                         default=DEFAULT_FONTS_DIR,
                         help='Directory of ttf fonts to use.')
